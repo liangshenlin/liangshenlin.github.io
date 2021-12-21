@@ -1,0 +1,311 @@
+<!DOCTYPE html>
+<html lang=en>
+<head>
+    <!-- so meta -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="HandheldFriendly" content="True">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=5" />
+    <meta name="description" content="Windows平台编译openssl1、    下载并安装perl（windows版本）https:&#x2F;&#x2F;www.activestate.com&#x2F;products&#x2F;perl&#x2F;downloads&#x2F; 2、    配置环境变量将安装好的perl的bin路径配置到系统环境变量中 3、    查看是否安装成功(perl -version) 4、    安装NASM（https:&#x2F;&#x2F;www.nasm.us&#x2F;）安">
+<meta property="og:type" content="article">
+<meta property="og:title" content="openssl 编译">
+<meta property="og:url" content="https://liang-shenlin.gitee.io/blogger/2021/12/20/openssl-%E7%BC%96%E8%AF%91/index.html">
+<meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="Windows平台编译openssl1、    下载并安装perl（windows版本）https:&#x2F;&#x2F;www.activestate.com&#x2F;products&#x2F;perl&#x2F;downloads&#x2F; 2、    配置环境变量将安装好的perl的bin路径配置到系统环境变量中 3、    查看是否安装成功(perl -version) 4、    安装NASM（https:&#x2F;&#x2F;www.nasm.us&#x2F;）安">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="c:/Users/E0005105/Desktop/work/gitee/blogger/source/_posts/openssl-%E7%BC%96%E8%AF%91/202112210900021-16400489511341.png">
+<meta property="og:image" content="c:/Users/E0005105/Desktop/work/gitee/blogger/source/_posts/openssl-%E7%BC%96%E8%AF%91/202112210900480.png">
+<meta property="og:image" content="c:/Users/E0005105/Desktop/work/gitee/blogger/source/_posts/openssl-%E7%BC%96%E8%AF%91/202112210900400.png">
+<meta property="og:image" content="c:/Users/E0005105/Desktop/work/gitee/blogger/source/_posts/openssl-%E7%BC%96%E8%AF%91/202112210900602.png">
+<meta property="og:image" content="c:/Users/E0005105/Desktop/work/gitee/blogger/source/_posts/openssl-%E7%BC%96%E8%AF%91/202112210900439.png">
+<meta property="og:image" content="c:/Users/E0005105/Desktop/work/gitee/blogger/source/_posts/openssl-%E7%BC%96%E8%AF%91/202112210900752.png">
+<meta property="og:image" content="c:/Users/E0005105/Desktop/work/gitee/blogger/source/_posts/openssl-%E7%BC%96%E8%AF%91/202112210901680.png">
+<meta property="og:image" content="c:/Users/E0005105/Desktop/work/gitee/blogger/source/_posts/openssl-%E7%BC%96%E8%AF%91/202112210901632.png">
+<meta property="article:published_time" content="2021-12-20T10:18:00.000Z">
+<meta property="article:modified_time" content="2021-12-21T01:09:25.341Z">
+<meta property="article:author" content="John Doe">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="c:/Users/E0005105/Desktop/work/gitee/blogger/source/_posts/openssl-%E7%BC%96%E8%AF%91/202112210900021-16400489511341.png">
+    
+    
+      
+        
+          <link rel="shortcut icon" href="/blogger/images/favicon.ico">
+        
+      
+      
+        
+          <link rel="icon" type="image/png" href="/blogger/images/favicon-192x192.png" sizes="192x192">
+        
+      
+      
+        
+          <link rel="apple-touch-icon" sizes="180x180" href="/blogger/images/apple-touch-icon.png">
+        
+      
+    
+    <!-- title -->
+    <title>openssl 编译</title>
+    <!-- styles -->
+    
+<link rel="stylesheet" href="/blogger/css/style.css">
+
+    <!-- persian styles -->
+    
+    <!-- rss -->
+    
+    
+	<!-- mathjax -->
+	
+<meta name="generator" content="Hexo 5.4.0"></head>
+
+<body class="max-width mx-auto px3 ltr">
+    
+      <div id="header-post">
+  <a id="menu-icon" href="#" aria-label="Menu"><i class="fas fa-bars fa-lg"></i></a>
+  <a id="menu-icon-tablet" href="#" aria-label="Menu"><i class="fas fa-bars fa-lg"></i></a>
+  <a id="top-icon-tablet" href="#" aria-label="Top" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');" style="display:none;"><i class="fas fa-chevron-up fa-lg"></i></a>
+  <span id="menu">
+    <span id="nav">
+      <ul>
+        <!--
+       --><li><a href="/blogger/">Home</a></li><!--
+     --><!--
+       --><li><a href="/blogger/about/">About</a></li><!--
+     --><!--
+       --><li><a href="/blogger/archives/">Writing</a></li><!--
+     --><!--
+       --><li><a target="_blank" rel="noopener" href="https://github.com/liangshenlin?tab=repositories">Projects</a></li><!--
+     -->
+      </ul>
+    </span>
+    <br/>
+    <span id="actions">
+      <ul>
+        
+        
+        <li><a class="icon" aria-label="Next post" href="/blogger/2021/12/20/hello-world/"><i class="fas fa-chevron-right" aria-hidden="true" onmouseover="$('#i-next').toggle();" onmouseout="$('#i-next').toggle();"></i></a></li>
+        
+        <li><a class="icon" aria-label="Back to top" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fas fa-chevron-up" aria-hidden="true" onmouseover="$('#i-top').toggle();" onmouseout="$('#i-top').toggle();"></i></a></li>
+        <li><a class="icon" aria-label="Share post" href="#"><i class="fas fa-share-alt" aria-hidden="true" onmouseover="$('#i-share').toggle();" onmouseout="$('#i-share').toggle();" onclick="$('#share').toggle();return false;"></i></a></li>
+      </ul>
+      <span id="i-prev" class="info" style="display:none;">Previous post</span>
+      <span id="i-next" class="info" style="display:none;">Next post</span>
+      <span id="i-top" class="info" style="display:none;">Back to top</span>
+      <span id="i-share" class="info" style="display:none;">Share post</span>
+    </span>
+    <br/>
+    <div id="share" style="display: none">
+      <ul>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=https://liang-shenlin.gitee.io/blogger/2021/12/20/openssl-%E7%BC%96%E8%AF%91/"><i class="fab fa-facebook " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=https://liang-shenlin.gitee.io/blogger/2021/12/20/openssl-%E7%BC%96%E8%AF%91/&text=openssl 编译"><i class="fab fa-twitter " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=https://liang-shenlin.gitee.io/blogger/2021/12/20/openssl-%E7%BC%96%E8%AF%91/&title=openssl 编译"><i class="fab fa-linkedin " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=https://liang-shenlin.gitee.io/blogger/2021/12/20/openssl-%E7%BC%96%E8%AF%91/&is_video=false&description=openssl 编译"><i class="fab fa-pinterest " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=openssl 编译&body=Check out this article: https://liang-shenlin.gitee.io/blogger/2021/12/20/openssl-%E7%BC%96%E8%AF%91/"><i class="fas fa-envelope " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=https://liang-shenlin.gitee.io/blogger/2021/12/20/openssl-%E7%BC%96%E8%AF%91/&title=openssl 编译"><i class="fab fa-get-pocket " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=https://liang-shenlin.gitee.io/blogger/2021/12/20/openssl-%E7%BC%96%E8%AF%91/&title=openssl 编译"><i class="fab fa-reddit " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=https://liang-shenlin.gitee.io/blogger/2021/12/20/openssl-%E7%BC%96%E8%AF%91/&title=openssl 编译"><i class="fab fa-stumbleupon " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=https://liang-shenlin.gitee.io/blogger/2021/12/20/openssl-%E7%BC%96%E8%AF%91/&title=openssl 编译"><i class="fab fa-digg " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=https://liang-shenlin.gitee.io/blogger/2021/12/20/openssl-%E7%BC%96%E8%AF%91/&name=openssl 编译&description="><i class="fab fa-tumblr " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=https://liang-shenlin.gitee.io/blogger/2021/12/20/openssl-%E7%BC%96%E8%AF%91/&t=openssl 编译"><i class="fab fa-hacker-news " aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+    <div id="toc">
+      <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#Windows%E5%B9%B3%E5%8F%B0%E7%BC%96%E8%AF%91openssl"><span class="toc-number">1.</span> <span class="toc-text">Windows平台编译openssl</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#1%E3%80%81-%E4%B8%8B%E8%BD%BD%E5%B9%B6%E5%AE%89%E8%A3%85perl%EF%BC%88windows%E7%89%88%E6%9C%AC%EF%BC%89"><span class="toc-number">1.1.</span> <span class="toc-text">1、    下载并安装perl（windows版本）</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#https-www-activestate-com-products-perl-downloads"><span class="toc-number">1.1.1.</span> <span class="toc-text">https:&#x2F;&#x2F;www.activestate.com&#x2F;products&#x2F;perl&#x2F;downloads&#x2F;</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#2%E3%80%81-%E9%85%8D%E7%BD%AE%E7%8E%AF%E5%A2%83%E5%8F%98%E9%87%8F"><span class="toc-number">1.2.</span> <span class="toc-text">2、    配置环境变量</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#3%E3%80%81-%E6%9F%A5%E7%9C%8B%E6%98%AF%E5%90%A6%E5%AE%89%E8%A3%85%E6%88%90%E5%8A%9F-perl-version"><span class="toc-number">1.3.</span> <span class="toc-text">3、    查看是否安装成功(perl -version)</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#4%E3%80%81-%E5%AE%89%E8%A3%85NASM%EF%BC%88https-www-nasm-us-%EF%BC%89"><span class="toc-number">1.4.</span> <span class="toc-text">4、    安装NASM（https:&#x2F;&#x2F;www.nasm.us&#x2F;）</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#5%E3%80%81-%E6%9F%A5%E7%9C%8Bnasm%E6%98%AF%E5%90%A6%E5%AE%89%E8%A3%85%E6%88%90%E5%8A%9F"><span class="toc-number">1.5.</span> <span class="toc-text">5、    查看nasm是否安装成功</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#6%E3%80%81-%E4%B8%8B%E8%BD%BDopenssl-%E5%9C%B0%E5%9D%80%EF%BC%88https-github-com-openssl-openssl-download%EF%BC%89"><span class="toc-number">1.6.</span> <span class="toc-text">6、     下载openssl 地址（https:&#x2F;&#x2F;github.com&#x2F;openssl&#x2F;openssl#download）</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#7%E3%80%81-%E5%9C%A8%E8%A7%A3%E5%8E%8B%E5%90%8E%E7%9A%84openssl-master%E7%9B%AE%E5%BD%95%E4%B8%8B%E5%88%9B%E5%BB%BA%E8%A6%81%E4%BF%9D%E5%AD%98openssl%E7%BC%96%E8%AF%91%E5%90%8E%E7%9A%84%E7%9B%AE%E5%BD%95"><span class="toc-number">1.7.</span> <span class="toc-text">7、     在解压后的openssl-master目录下创建要保存openssl编译后的目录</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#8%E3%80%81%E7%BC%96%E8%AF%91openssl"><span class="toc-number">1.8.</span> <span class="toc-text">8、编译openssl</span></a></li></ol></li></ol>
+    </div>
+  </span>
+</div>
+
+    
+    <div class="content index py4">
+        
+        <article class="post" itemscope itemtype="http://schema.org/BlogPosting">
+  <header>
+    
+    <h1 class="posttitle" itemprop="name headline">
+        openssl 编译
+    </h1>
+
+
+
+    <div class="meta">
+      <span class="author" itemprop="author" itemscope itemtype="http://schema.org/Person">
+        <span itemprop="name">John Doe</span>
+      </span>
+      
+    <div class="postdate">
+      
+        <time datetime="2021-12-20T10:18:00.000Z" itemprop="datePublished">2021-12-20</time>
+        
+      
+    </div>
+
+
+      
+
+      
+
+    </div>
+  </header>
+  
+
+  <div class="content" itemprop="articleBody">
+    <h1 id="Windows平台编译openssl"><a href="#Windows平台编译openssl" class="headerlink" title="Windows平台编译openssl"></a>Windows平台编译openssl</h1><h2 id="1、-下载并安装perl（windows版本）"><a href="#1、-下载并安装perl（windows版本）" class="headerlink" title="1、    下载并安装perl（windows版本）"></a>1、    下载并安装perl（windows版本）</h2><h3 id="https-www-activestate-com-products-perl-downloads"><a href="#https-www-activestate-com-products-perl-downloads" class="headerlink" title="https://www.activestate.com/products/perl/downloads/"></a><a target="_blank" rel="noopener" href="https://www.activestate.com/products/perl/downloads/">https://www.activestate.com/products/perl/downloads/</a></h3><p><img src="C:/Users/E0005105/Desktop/work/gitee/blogger/source/_posts/openssl-%E7%BC%96%E8%AF%91/202112210900021-16400489511341.png"></p>
+<h2 id="2、-配置环境变量"><a href="#2、-配置环境变量" class="headerlink" title="2、    配置环境变量"></a>2、    配置环境变量</h2><p><strong>将安装好的perl的bin路径配置到系统环境变量中</strong></p>
+<h2 id="3、-查看是否安装成功-perl-version"><a href="#3、-查看是否安装成功-perl-version" class="headerlink" title="3、    查看是否安装成功(perl -version)"></a>3、    查看是否安装成功(perl -version)</h2><p><img src="C:/Users/E0005105/Desktop/work/gitee/blogger/source/_posts/openssl-%E7%BC%96%E8%AF%91/202112210900480.png"></p>
+<h2 id="4、-安装NASM（https-www-nasm-us-）"><a href="#4、-安装NASM（https-www-nasm-us-）" class="headerlink" title="4、    安装NASM（https://www.nasm.us/）"></a>4、    安装NASM（<a target="_blank" rel="noopener" href="https://www.nasm.us/%EF%BC%89">https://www.nasm.us/）</a></h2><p><strong>安装完成后将nasm的bin路径配置在系统环境变量中</strong></p>
+<h2 id="5、-查看nasm是否安装成功"><a href="#5、-查看nasm是否安装成功" class="headerlink" title="5、    查看nasm是否安装成功"></a>5、    查看nasm是否安装成功</h2><p><img src="C:/Users/E0005105/Desktop/work/gitee/blogger/source/_posts/openssl-%E7%BC%96%E8%AF%91/202112210900400.png"></p>
+<h2 id="6、-下载openssl-地址（https-github-com-openssl-openssl-download）"><a href="#6、-下载openssl-地址（https-github-com-openssl-openssl-download）" class="headerlink" title="6、     下载openssl 地址（https://github.com/openssl/openssl#download）"></a>6、     下载openssl 地址（<a target="_blank" rel="noopener" href="https://github.com/openssl/openssl#download%EF%BC%89">https://github.com/openssl/openssl#download）</a></h2><h2 id="7、-在解压后的openssl-master目录下创建要保存openssl编译后的目录"><a href="#7、-在解压后的openssl-master目录下创建要保存openssl编译后的目录" class="headerlink" title="7、     在解压后的openssl-master目录下创建要保存openssl编译后的目录"></a>7、     在解压后的openssl-master目录下创建要保存openssl编译后的目录</h2><p><img src="C:/Users/E0005105/Desktop/work/gitee/blogger/source/_posts/openssl-%E7%BC%96%E8%AF%91/202112210900602.png"></p>
+<h2 id="8、编译openssl"><a href="#8、编译openssl" class="headerlink" title="8、编译openssl"></a>8、编译openssl</h2><p><strong>切换至下载好的openssl目录并输入命令 ：</strong></p>
+<p><strong>perl Configure VC-WIN64A no-asm –prefix=C:\Users\E0005105\Desktop\tas\openssl-master\openssl-master\VS2019-openssl</strong></p>
+<p><strong>其中：VC-WIN64A表示Windows 64位系统，32位系统换成VC-WIN32，若要使用debug版本，使用debug-VC-WIN64A或debug-VC-WIN32</strong></p>
+<p><strong>no-asm 表示不用汇编，不设置此属性，可能会导致编译不过</strong></p>
+<p><strong>–prefix=C:\Users\E0005105\Desktop\tas\openssl-master\openssl-master\VS2019-openssl将其安装到我所新建的文件夹下，省略会安装在默认路径下</strong></p>
+<p><img src="C:/Users/E0005105/Desktop/work/gitee/blogger/source/_posts/openssl-%E7%BC%96%E8%AF%91/202112210900439.png"></p>
+<p><strong>输入：nmake 编译库源码</strong> </p>
+<p><img src="C:/Users/E0005105/Desktop/work/gitee/blogger/source/_posts/openssl-%E7%BC%96%E8%AF%91/202112210900752.png"></p>
+<p><strong>输入：nmake install 进行安装</strong></p>
+<p><img src="C:/Users/E0005105/Desktop/work/gitee/blogger/source/_posts/openssl-%E7%BC%96%E8%AF%91/202112210901680.png"></p>
+<p><strong>安装完成后进入安装目录查看，表明成功</strong></p>
+<p><img src="C:/Users/E0005105/Desktop/work/gitee/blogger/source/_posts/openssl-%E7%BC%96%E8%AF%91/202112210901632.png"></p>
+
+  </div>
+</article>
+
+
+
+        
+          <div id="footer-post-container">
+  <div id="footer-post">
+
+    <div id="nav-footer" style="display: none">
+      <ul>
+         
+          <li><a href="/blogger/">Home</a></li>
+         
+          <li><a href="/blogger/about/">About</a></li>
+         
+          <li><a href="/blogger/archives/">Writing</a></li>
+         
+          <li><a target="_blank" rel="noopener" href="https://github.com/liangshenlin?tab=repositories">Projects</a></li>
+        
+      </ul>
+    </div>
+
+    <div id="toc-footer" style="display: none">
+      <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#Windows%E5%B9%B3%E5%8F%B0%E7%BC%96%E8%AF%91openssl"><span class="toc-number">1.</span> <span class="toc-text">Windows平台编译openssl</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#1%E3%80%81-%E4%B8%8B%E8%BD%BD%E5%B9%B6%E5%AE%89%E8%A3%85perl%EF%BC%88windows%E7%89%88%E6%9C%AC%EF%BC%89"><span class="toc-number">1.1.</span> <span class="toc-text">1、    下载并安装perl（windows版本）</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#https-www-activestate-com-products-perl-downloads"><span class="toc-number">1.1.1.</span> <span class="toc-text">https:&#x2F;&#x2F;www.activestate.com&#x2F;products&#x2F;perl&#x2F;downloads&#x2F;</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#2%E3%80%81-%E9%85%8D%E7%BD%AE%E7%8E%AF%E5%A2%83%E5%8F%98%E9%87%8F"><span class="toc-number">1.2.</span> <span class="toc-text">2、    配置环境变量</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#3%E3%80%81-%E6%9F%A5%E7%9C%8B%E6%98%AF%E5%90%A6%E5%AE%89%E8%A3%85%E6%88%90%E5%8A%9F-perl-version"><span class="toc-number">1.3.</span> <span class="toc-text">3、    查看是否安装成功(perl -version)</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#4%E3%80%81-%E5%AE%89%E8%A3%85NASM%EF%BC%88https-www-nasm-us-%EF%BC%89"><span class="toc-number">1.4.</span> <span class="toc-text">4、    安装NASM（https:&#x2F;&#x2F;www.nasm.us&#x2F;）</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#5%E3%80%81-%E6%9F%A5%E7%9C%8Bnasm%E6%98%AF%E5%90%A6%E5%AE%89%E8%A3%85%E6%88%90%E5%8A%9F"><span class="toc-number">1.5.</span> <span class="toc-text">5、    查看nasm是否安装成功</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#6%E3%80%81-%E4%B8%8B%E8%BD%BDopenssl-%E5%9C%B0%E5%9D%80%EF%BC%88https-github-com-openssl-openssl-download%EF%BC%89"><span class="toc-number">1.6.</span> <span class="toc-text">6、     下载openssl 地址（https:&#x2F;&#x2F;github.com&#x2F;openssl&#x2F;openssl#download）</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#7%E3%80%81-%E5%9C%A8%E8%A7%A3%E5%8E%8B%E5%90%8E%E7%9A%84openssl-master%E7%9B%AE%E5%BD%95%E4%B8%8B%E5%88%9B%E5%BB%BA%E8%A6%81%E4%BF%9D%E5%AD%98openssl%E7%BC%96%E8%AF%91%E5%90%8E%E7%9A%84%E7%9B%AE%E5%BD%95"><span class="toc-number">1.7.</span> <span class="toc-text">7、     在解压后的openssl-master目录下创建要保存openssl编译后的目录</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#8%E3%80%81%E7%BC%96%E8%AF%91openssl"><span class="toc-number">1.8.</span> <span class="toc-text">8、编译openssl</span></a></li></ol></li></ol>
+    </div>
+
+    <div id="share-footer" style="display: none">
+      <ul>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=https://liang-shenlin.gitee.io/blogger/2021/12/20/openssl-%E7%BC%96%E8%AF%91/"><i class="fab fa-facebook fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=https://liang-shenlin.gitee.io/blogger/2021/12/20/openssl-%E7%BC%96%E8%AF%91/&text=openssl 编译"><i class="fab fa-twitter fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=https://liang-shenlin.gitee.io/blogger/2021/12/20/openssl-%E7%BC%96%E8%AF%91/&title=openssl 编译"><i class="fab fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=https://liang-shenlin.gitee.io/blogger/2021/12/20/openssl-%E7%BC%96%E8%AF%91/&is_video=false&description=openssl 编译"><i class="fab fa-pinterest fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=openssl 编译&body=Check out this article: https://liang-shenlin.gitee.io/blogger/2021/12/20/openssl-%E7%BC%96%E8%AF%91/"><i class="fas fa-envelope fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=https://liang-shenlin.gitee.io/blogger/2021/12/20/openssl-%E7%BC%96%E8%AF%91/&title=openssl 编译"><i class="fab fa-get-pocket fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=https://liang-shenlin.gitee.io/blogger/2021/12/20/openssl-%E7%BC%96%E8%AF%91/&title=openssl 编译"><i class="fab fa-reddit fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=https://liang-shenlin.gitee.io/blogger/2021/12/20/openssl-%E7%BC%96%E8%AF%91/&title=openssl 编译"><i class="fab fa-stumbleupon fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=https://liang-shenlin.gitee.io/blogger/2021/12/20/openssl-%E7%BC%96%E8%AF%91/&title=openssl 编译"><i class="fab fa-digg fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=https://liang-shenlin.gitee.io/blogger/2021/12/20/openssl-%E7%BC%96%E8%AF%91/&name=openssl 编译&description="><i class="fab fa-tumblr fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=https://liang-shenlin.gitee.io/blogger/2021/12/20/openssl-%E7%BC%96%E8%AF%91/&t=openssl 编译"><i class="fab fa-hacker-news fa-lg" aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+
+    <div id="actions-footer">
+        <a id="menu" class="icon" href="#" onclick="$('#nav-footer').toggle();return false;"><i class="fas fa-bars fa-lg" aria-hidden="true"></i> Menu</a>
+        <a id="toc" class="icon" href="#" onclick="$('#toc-footer').toggle();return false;"><i class="fas fa-list fa-lg" aria-hidden="true"></i> TOC</a>
+        <a id="share" class="icon" href="#" onclick="$('#share-footer').toggle();return false;"><i class="fas fa-share-alt fa-lg" aria-hidden="true"></i> Share</a>
+        <a id="top" style="display:none" class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fas fa-chevron-up fa-lg" aria-hidden="true"></i> Top</a>
+    </div>
+
+  </div>
+</div>
+
+        
+        <footer id="footer">
+  <div class="footer-left">
+    Copyright &copy;
+    
+    
+    2016-2021
+    John Doe
+  </div>
+  <div class="footer-right">
+    <nav>
+      <ul>
+        <!--
+       --><li><a href="/blogger/">Home</a></li><!--
+     --><!--
+       --><li><a href="/blogger/about/">About</a></li><!--
+     --><!--
+       --><li><a href="/blogger/archives/">Writing</a></li><!--
+     --><!--
+       --><li><a target="_blank" rel="noopener" href="https://github.com/liangshenlin?tab=repositories">Projects</a></li><!--
+     -->
+      </ul>
+    </nav>
+  </div>
+</footer>
+
+    </div>
+    <!-- styles -->
+
+
+
+  <link rel="preload" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.2/css/all.min.css" crossorigin="anonymous" onload="this.onload=null;this.rel='stylesheet'"/>
+
+
+    <!-- jquery -->
+ 
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js" crossorigin="anonymous"></script> 
+
+
+
+
+<!-- clipboard -->
+
+  
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.7/clipboard.min.js" crossorigin="anonymous"></script> 
+  
+  <script type="text/javascript">
+  $(function() {
+    // copy-btn HTML
+    var btn = "<span class=\"btn-copy tooltipped tooltipped-sw\" aria-label=\"Copy to clipboard!\">";
+    btn += '<i class="far fa-clone"></i>';
+    btn += '</span>'; 
+    // mount it!
+    $(".highlight table").before(btn);
+    var clip = new ClipboardJS('.btn-copy', {
+      text: function(trigger) {
+        return Array.from(trigger.nextElementSibling.querySelectorAll('.code')).reduce((str,it)=>str+it.innerText+'\n','')
+      }
+    });
+    clip.on('success', function(e) {
+      e.trigger.setAttribute('aria-label', "Copied!");
+      e.clearSelection();
+    })
+  })
+  </script>
+
+
+<script src="/blogger/js/main.js"></script>
+
+<!-- search -->
+
+<!-- Google Analytics -->
+
+<!-- Baidu Analytics -->
+
+<!-- Cloudflare Analytics -->
+
+<!-- Umami Analytics -->
+
+<!-- Disqus Comments -->
+
+<!-- utterances Comments -->
+
+</body>
+</html>
