@@ -1,0 +1,300 @@
+<!DOCTYPE html>
+<html lang=en>
+<head>
+    <!-- so meta -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="HandheldFriendly" content="True">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=5" />
+    <meta name="description" content="1、下载opensslopenssl地址（https:&#x2F;&#x2F;github.com&#x2F;openssl&#x2F;openssl#download） 下载后文件中内容如下：  2、输入config命令 .&#x2F;config –prefix&#x3D;&#x2F;home&#x2F;e0005105&#x2F;openssl&#x2F;openssl-linux–prefix&#x3D;&#x2F;home&#x2F;e0005105&#x2F;openssl&#x2F;openssl-linux  其中，&#x3D;后面为你要">
+<meta property="og:type" content="article">
+<meta property="og:title" content="linux平台编译openssl">
+<meta property="og:url" content="https://liang-shenlin.gitee.io/blogger/2021/12/21/linux%E5%B9%B3%E5%8F%B0openssl%E7%BC%96%E8%AF%91/index.html">
+<meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="1、下载opensslopenssl地址（https:&#x2F;&#x2F;github.com&#x2F;openssl&#x2F;openssl#download） 下载后文件中内容如下：  2、输入config命令 .&#x2F;config –prefix&#x3D;&#x2F;home&#x2F;e0005105&#x2F;openssl&#x2F;openssl-linux–prefix&#x3D;&#x2F;home&#x2F;e0005105&#x2F;openssl&#x2F;openssl-linux  其中，&#x3D;后面为你要">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="https://gitee.com/liang-shenlin/resource/raw/master/img/202112210925014.png">
+<meta property="og:image" content="https://gitee.com/liang-shenlin/resource/raw/master/img/202112210926629.png">
+<meta property="og:image" content="https://gitee.com/liang-shenlin/resource/raw/master/img/202112210931597.png">
+<meta property="og:image" content="https://gitee.com/liang-shenlin/resource/raw/master/img/202112210927708.png">
+<meta property="og:image" content="https://gitee.com/liang-shenlin/resource/raw/master/img/202112210931581.png">
+<meta property="article:published_time" content="2021-12-21T01:30:49.000Z">
+<meta property="article:modified_time" content="2021-12-21T01:34:18.445Z">
+<meta property="article:author" content="John Doe">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://gitee.com/liang-shenlin/resource/raw/master/img/202112210925014.png">
+    
+    
+      
+        
+          <link rel="shortcut icon" href="/blogger/images/favicon.ico">
+        
+      
+      
+        
+          <link rel="icon" type="image/png" href="/blogger/images/favicon-192x192.png" sizes="192x192">
+        
+      
+      
+        
+          <link rel="apple-touch-icon" sizes="180x180" href="/blogger/images/apple-touch-icon.png">
+        
+      
+    
+    <!-- title -->
+    <title>linux平台编译openssl</title>
+    <!-- styles -->
+    
+<link rel="stylesheet" href="/blogger/css/style.css">
+
+    <!-- persian styles -->
+    
+    <!-- rss -->
+    
+    
+	<!-- mathjax -->
+	
+<meta name="generator" content="Hexo 5.4.0"></head>
+
+<body class="max-width mx-auto px3 ltr">
+    
+      <div id="header-post">
+  <a id="menu-icon" href="#" aria-label="Menu"><i class="fas fa-bars fa-lg"></i></a>
+  <a id="menu-icon-tablet" href="#" aria-label="Menu"><i class="fas fa-bars fa-lg"></i></a>
+  <a id="top-icon-tablet" href="#" aria-label="Top" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');" style="display:none;"><i class="fas fa-chevron-up fa-lg"></i></a>
+  <span id="menu">
+    <span id="nav">
+      <ul>
+        <!--
+       --><li><a href="/blogger/">Home</a></li><!--
+     --><!--
+       --><li><a href="/blogger/about/">About</a></li><!--
+     --><!--
+       --><li><a href="/blogger/archives/">Writing</a></li><!--
+     --><!--
+       --><li><a target="_blank" rel="noopener" href="https://github.com/liangshenlin?tab=repositories">Projects</a></li><!--
+     -->
+      </ul>
+    </span>
+    <br/>
+    <span id="actions">
+      <ul>
+        
+        
+        <li><a class="icon" aria-label="Next post" href="/blogger/2021/12/20/windows%E5%B9%B3%E5%8F%B0openssl%E7%BC%96%E8%AF%91/"><i class="fas fa-chevron-right" aria-hidden="true" onmouseover="$('#i-next').toggle();" onmouseout="$('#i-next').toggle();"></i></a></li>
+        
+        <li><a class="icon" aria-label="Back to top" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fas fa-chevron-up" aria-hidden="true" onmouseover="$('#i-top').toggle();" onmouseout="$('#i-top').toggle();"></i></a></li>
+        <li><a class="icon" aria-label="Share post" href="#"><i class="fas fa-share-alt" aria-hidden="true" onmouseover="$('#i-share').toggle();" onmouseout="$('#i-share').toggle();" onclick="$('#share').toggle();return false;"></i></a></li>
+      </ul>
+      <span id="i-prev" class="info" style="display:none;">Previous post</span>
+      <span id="i-next" class="info" style="display:none;">Next post</span>
+      <span id="i-top" class="info" style="display:none;">Back to top</span>
+      <span id="i-share" class="info" style="display:none;">Share post</span>
+    </span>
+    <br/>
+    <div id="share" style="display: none">
+      <ul>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=https://liang-shenlin.gitee.io/blogger/2021/12/21/linux%E5%B9%B3%E5%8F%B0openssl%E7%BC%96%E8%AF%91/"><i class="fab fa-facebook " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=https://liang-shenlin.gitee.io/blogger/2021/12/21/linux%E5%B9%B3%E5%8F%B0openssl%E7%BC%96%E8%AF%91/&text=linux平台编译openssl"><i class="fab fa-twitter " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=https://liang-shenlin.gitee.io/blogger/2021/12/21/linux%E5%B9%B3%E5%8F%B0openssl%E7%BC%96%E8%AF%91/&title=linux平台编译openssl"><i class="fab fa-linkedin " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=https://liang-shenlin.gitee.io/blogger/2021/12/21/linux%E5%B9%B3%E5%8F%B0openssl%E7%BC%96%E8%AF%91/&is_video=false&description=linux平台编译openssl"><i class="fab fa-pinterest " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=linux平台编译openssl&body=Check out this article: https://liang-shenlin.gitee.io/blogger/2021/12/21/linux%E5%B9%B3%E5%8F%B0openssl%E7%BC%96%E8%AF%91/"><i class="fas fa-envelope " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=https://liang-shenlin.gitee.io/blogger/2021/12/21/linux%E5%B9%B3%E5%8F%B0openssl%E7%BC%96%E8%AF%91/&title=linux平台编译openssl"><i class="fab fa-get-pocket " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=https://liang-shenlin.gitee.io/blogger/2021/12/21/linux%E5%B9%B3%E5%8F%B0openssl%E7%BC%96%E8%AF%91/&title=linux平台编译openssl"><i class="fab fa-reddit " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=https://liang-shenlin.gitee.io/blogger/2021/12/21/linux%E5%B9%B3%E5%8F%B0openssl%E7%BC%96%E8%AF%91/&title=linux平台编译openssl"><i class="fab fa-stumbleupon " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=https://liang-shenlin.gitee.io/blogger/2021/12/21/linux%E5%B9%B3%E5%8F%B0openssl%E7%BC%96%E8%AF%91/&title=linux平台编译openssl"><i class="fab fa-digg " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=https://liang-shenlin.gitee.io/blogger/2021/12/21/linux%E5%B9%B3%E5%8F%B0openssl%E7%BC%96%E8%AF%91/&name=linux平台编译openssl&description="><i class="fab fa-tumblr " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=https://liang-shenlin.gitee.io/blogger/2021/12/21/linux%E5%B9%B3%E5%8F%B0openssl%E7%BC%96%E8%AF%91/&t=linux平台编译openssl"><i class="fab fa-hacker-news " aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+    <div id="toc">
+      <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#1%E3%80%81%E4%B8%8B%E8%BD%BDopenssl"><span class="toc-number">1.</span> <span class="toc-text">1、下载openssl</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2%E3%80%81%E8%BE%93%E5%85%A5config%E5%91%BD%E4%BB%A4"><span class="toc-number">2.</span> <span class="toc-text">2、输入config命令</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3%E3%80%81%E6%89%A7%E8%A1%8Cmake%E5%91%BD%E4%BB%A4"><span class="toc-number">3.</span> <span class="toc-text">3、执行make命令</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#4%E3%80%81%E6%89%A7%E8%A1%8Cmake-test%E5%91%BD%E4%BB%A4%EF%BC%88%E5%8F%AF%E9%80%89%EF%BC%89"><span class="toc-number">4.</span> <span class="toc-text">4、执行make test命令（可选）</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#5%E3%80%81%E6%89%A7%E8%A1%8Cmake-install-%E5%91%BD%E4%BB%A4"><span class="toc-number">5.</span> <span class="toc-text">5、执行make install 命令</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#6%E3%80%81-%E6%89%A7%E8%A1%8C%E5%AE%8C%E6%88%90%E5%90%8E%E5%88%87%E5%9B%9E%E5%89%8D%E9%9D%A2%E6%89%80%E9%80%89%E5%AE%89%E8%A3%85%E7%9A%84openssl-linux%E7%9B%AE%E5%BD%95%E6%9F%A5%E7%9C%8B%E5%B7%B2%E7%BB%8F%E7%BC%96%E8%AF%91%E5%A5%BD%E7%9A%84openssl%E6%96%87%E4%BB%B6"><span class="toc-number">6.</span> <span class="toc-text">6、 执行完成后切回前面所选安装的openssl-linux目录查看已经编译好的openssl文件</span></a></li></ol>
+    </div>
+  </span>
+</div>
+
+    
+    <div class="content index py4">
+        
+        <article class="post" itemscope itemtype="http://schema.org/BlogPosting">
+  <header>
+    
+    <h1 class="posttitle" itemprop="name headline">
+        linux平台编译openssl
+    </h1>
+
+
+
+    <div class="meta">
+      <span class="author" itemprop="author" itemscope itemtype="http://schema.org/Person">
+        <span itemprop="name">John Doe</span>
+      </span>
+      
+    <div class="postdate">
+      
+        <time datetime="2021-12-21T01:30:49.000Z" itemprop="datePublished">2021-12-21</time>
+        
+      
+    </div>
+
+
+      
+
+      
+
+    </div>
+  </header>
+  
+
+  <div class="content" itemprop="articleBody">
+    <h3 id="1、下载openssl"><a href="#1、下载openssl" class="headerlink" title="1、下载openssl"></a>1、下载openssl</h3><p><strong>openssl地址（<a target="_blank" rel="noopener" href="https://github.com/openssl/openssl#download%EF%BC%89">https://github.com/openssl/openssl#download）</a></strong></p>
+<p><strong>下载后文件中内容如下：</strong></p>
+<p><img src="https://gitee.com/liang-shenlin/resource/raw/master/img/202112210925014.png" alt="image-20211221092545932"></p>
+<h3 id="2、输入config命令"><a href="#2、输入config命令" class="headerlink" title="2、输入config命令"></a>2、输入config命令</h3><p> <strong>./config –prefix=/home/e0005105/openssl/openssl-linux–prefix=/home/e0005105/openssl/openssl-linux</strong> </p>
+<p><strong>其中，=后面为你要生成编译文件的目录</strong></p>
+<p><img src="https://gitee.com/liang-shenlin/resource/raw/master/img/202112210926629.png" alt="image-20211221092609433"></p>
+<h3 id="3、执行make命令"><a href="#3、执行make命令" class="headerlink" title="3、执行make命令"></a>3、执行make命令</h3><h3 id="4、执行make-test命令（可选）"><a href="#4、执行make-test命令（可选）" class="headerlink" title="4、执行make test命令（可选）"></a>4、执行make test命令（可选）</h3><p><img src="https://gitee.com/liang-shenlin/resource/raw/master/img/202112210931597.png" alt="image-20211221092700880"></p>
+<h3 id="5、执行make-install-命令"><a href="#5、执行make-install-命令" class="headerlink" title="5、执行make install 命令"></a>5、执行make install 命令</h3><h3 id="6、-执行完成后切回前面所选安装的openssl-linux目录查看已经编译好的openssl文件"><a href="#6、-执行完成后切回前面所选安装的openssl-linux目录查看已经编译好的openssl文件" class="headerlink" title="6、 执行完成后切回前面所选安装的openssl-linux目录查看已经编译好的openssl文件"></a>6、 执行完成后切回前面所选安装的openssl-linux目录查看已经编译好的openssl文件</h3><p><img src="https://gitee.com/liang-shenlin/resource/raw/master/img/202112210927708.png" alt="image-20211221092752608"></p>
+<p>​    <strong>其中lib64目录下就是编译好的动态库和静态库</strong></p>
+<p><img src="https://gitee.com/liang-shenlin/resource/raw/master/img/202112210931581.png" alt="image-20211221092841664"></p>
+
+  </div>
+</article>
+
+
+
+        
+          <div id="footer-post-container">
+  <div id="footer-post">
+
+    <div id="nav-footer" style="display: none">
+      <ul>
+         
+          <li><a href="/blogger/">Home</a></li>
+         
+          <li><a href="/blogger/about/">About</a></li>
+         
+          <li><a href="/blogger/archives/">Writing</a></li>
+         
+          <li><a target="_blank" rel="noopener" href="https://github.com/liangshenlin?tab=repositories">Projects</a></li>
+        
+      </ul>
+    </div>
+
+    <div id="toc-footer" style="display: none">
+      <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#1%E3%80%81%E4%B8%8B%E8%BD%BDopenssl"><span class="toc-number">1.</span> <span class="toc-text">1、下载openssl</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2%E3%80%81%E8%BE%93%E5%85%A5config%E5%91%BD%E4%BB%A4"><span class="toc-number">2.</span> <span class="toc-text">2、输入config命令</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3%E3%80%81%E6%89%A7%E8%A1%8Cmake%E5%91%BD%E4%BB%A4"><span class="toc-number">3.</span> <span class="toc-text">3、执行make命令</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#4%E3%80%81%E6%89%A7%E8%A1%8Cmake-test%E5%91%BD%E4%BB%A4%EF%BC%88%E5%8F%AF%E9%80%89%EF%BC%89"><span class="toc-number">4.</span> <span class="toc-text">4、执行make test命令（可选）</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#5%E3%80%81%E6%89%A7%E8%A1%8Cmake-install-%E5%91%BD%E4%BB%A4"><span class="toc-number">5.</span> <span class="toc-text">5、执行make install 命令</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#6%E3%80%81-%E6%89%A7%E8%A1%8C%E5%AE%8C%E6%88%90%E5%90%8E%E5%88%87%E5%9B%9E%E5%89%8D%E9%9D%A2%E6%89%80%E9%80%89%E5%AE%89%E8%A3%85%E7%9A%84openssl-linux%E7%9B%AE%E5%BD%95%E6%9F%A5%E7%9C%8B%E5%B7%B2%E7%BB%8F%E7%BC%96%E8%AF%91%E5%A5%BD%E7%9A%84openssl%E6%96%87%E4%BB%B6"><span class="toc-number">6.</span> <span class="toc-text">6、 执行完成后切回前面所选安装的openssl-linux目录查看已经编译好的openssl文件</span></a></li></ol>
+    </div>
+
+    <div id="share-footer" style="display: none">
+      <ul>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=https://liang-shenlin.gitee.io/blogger/2021/12/21/linux%E5%B9%B3%E5%8F%B0openssl%E7%BC%96%E8%AF%91/"><i class="fab fa-facebook fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=https://liang-shenlin.gitee.io/blogger/2021/12/21/linux%E5%B9%B3%E5%8F%B0openssl%E7%BC%96%E8%AF%91/&text=linux平台编译openssl"><i class="fab fa-twitter fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=https://liang-shenlin.gitee.io/blogger/2021/12/21/linux%E5%B9%B3%E5%8F%B0openssl%E7%BC%96%E8%AF%91/&title=linux平台编译openssl"><i class="fab fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=https://liang-shenlin.gitee.io/blogger/2021/12/21/linux%E5%B9%B3%E5%8F%B0openssl%E7%BC%96%E8%AF%91/&is_video=false&description=linux平台编译openssl"><i class="fab fa-pinterest fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=linux平台编译openssl&body=Check out this article: https://liang-shenlin.gitee.io/blogger/2021/12/21/linux%E5%B9%B3%E5%8F%B0openssl%E7%BC%96%E8%AF%91/"><i class="fas fa-envelope fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=https://liang-shenlin.gitee.io/blogger/2021/12/21/linux%E5%B9%B3%E5%8F%B0openssl%E7%BC%96%E8%AF%91/&title=linux平台编译openssl"><i class="fab fa-get-pocket fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=https://liang-shenlin.gitee.io/blogger/2021/12/21/linux%E5%B9%B3%E5%8F%B0openssl%E7%BC%96%E8%AF%91/&title=linux平台编译openssl"><i class="fab fa-reddit fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=https://liang-shenlin.gitee.io/blogger/2021/12/21/linux%E5%B9%B3%E5%8F%B0openssl%E7%BC%96%E8%AF%91/&title=linux平台编译openssl"><i class="fab fa-stumbleupon fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=https://liang-shenlin.gitee.io/blogger/2021/12/21/linux%E5%B9%B3%E5%8F%B0openssl%E7%BC%96%E8%AF%91/&title=linux平台编译openssl"><i class="fab fa-digg fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=https://liang-shenlin.gitee.io/blogger/2021/12/21/linux%E5%B9%B3%E5%8F%B0openssl%E7%BC%96%E8%AF%91/&name=linux平台编译openssl&description="><i class="fab fa-tumblr fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=https://liang-shenlin.gitee.io/blogger/2021/12/21/linux%E5%B9%B3%E5%8F%B0openssl%E7%BC%96%E8%AF%91/&t=linux平台编译openssl"><i class="fab fa-hacker-news fa-lg" aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+
+    <div id="actions-footer">
+        <a id="menu" class="icon" href="#" onclick="$('#nav-footer').toggle();return false;"><i class="fas fa-bars fa-lg" aria-hidden="true"></i> Menu</a>
+        <a id="toc" class="icon" href="#" onclick="$('#toc-footer').toggle();return false;"><i class="fas fa-list fa-lg" aria-hidden="true"></i> TOC</a>
+        <a id="share" class="icon" href="#" onclick="$('#share-footer').toggle();return false;"><i class="fas fa-share-alt fa-lg" aria-hidden="true"></i> Share</a>
+        <a id="top" style="display:none" class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fas fa-chevron-up fa-lg" aria-hidden="true"></i> Top</a>
+    </div>
+
+  </div>
+</div>
+
+        
+        <footer id="footer">
+  <div class="footer-left">
+    Copyright &copy;
+    
+    
+    2016-2021
+    John Doe
+  </div>
+  <div class="footer-right">
+    <nav>
+      <ul>
+        <!--
+       --><li><a href="/blogger/">Home</a></li><!--
+     --><!--
+       --><li><a href="/blogger/about/">About</a></li><!--
+     --><!--
+       --><li><a href="/blogger/archives/">Writing</a></li><!--
+     --><!--
+       --><li><a target="_blank" rel="noopener" href="https://github.com/liangshenlin?tab=repositories">Projects</a></li><!--
+     -->
+      </ul>
+    </nav>
+  </div>
+</footer>
+
+    </div>
+    <!-- styles -->
+
+
+
+  <link rel="preload" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.2/css/all.min.css" crossorigin="anonymous" onload="this.onload=null;this.rel='stylesheet'"/>
+
+
+    <!-- jquery -->
+ 
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js" crossorigin="anonymous"></script> 
+
+
+
+
+<!-- clipboard -->
+
+  
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.7/clipboard.min.js" crossorigin="anonymous"></script> 
+  
+  <script type="text/javascript">
+  $(function() {
+    // copy-btn HTML
+    var btn = "<span class=\"btn-copy tooltipped tooltipped-sw\" aria-label=\"Copy to clipboard!\">";
+    btn += '<i class="far fa-clone"></i>';
+    btn += '</span>'; 
+    // mount it!
+    $(".highlight table").before(btn);
+    var clip = new ClipboardJS('.btn-copy', {
+      text: function(trigger) {
+        return Array.from(trigger.nextElementSibling.querySelectorAll('.code')).reduce((str,it)=>str+it.innerText+'\n','')
+      }
+    });
+    clip.on('success', function(e) {
+      e.trigger.setAttribute('aria-label', "Copied!");
+      e.clearSelection();
+    })
+  })
+  </script>
+
+
+<script src="/blogger/js/main.js"></script>
+
+<!-- search -->
+
+<!-- Google Analytics -->
+
+<!-- Baidu Analytics -->
+
+<!-- Cloudflare Analytics -->
+
+<!-- Umami Analytics -->
+
+<!-- Disqus Comments -->
+
+<!-- utterances Comments -->
+
+</body>
+</html>
